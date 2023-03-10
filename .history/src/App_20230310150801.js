@@ -77,10 +77,10 @@ function App() {
 
   const addProduct = async () => {
     if (window.confirm('Do you want to Add it?'))
-      if (isNaN(newProcuctId)) {
+      if (!isNaN(newProcuctId)) {
         alert("آیدی معتبر نیست ")
       }
-      else if (isNaN(newProcuctPrice)) {
+      else if (!isNaN(newProcuctPrice)) {
         alert("قیمت معتبر نیست ")
       }
       else

@@ -180,16 +180,4 @@ table {
   border: none;
   margin: 10px;
 }
-#dropdownMenuButton2{
-  background-color: rgb(236, 251, 123);
-
-  border: none;
-
-}
-#dropdownMenuButton2 button{
-  background-color: rgb(236, 251, 123) !important;
-  border: none;
-  width: 100%;
-  height: 100%;
-  padding: 16px !important;
-}
+#drop

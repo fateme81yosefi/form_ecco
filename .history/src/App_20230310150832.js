@@ -80,7 +80,7 @@ function App() {
       if (isNaN(newProcuctId)) {
         alert("آیدی معتبر نیست ")
       }
-      else if (isNaN(newProcuctPrice)) {
+      else if (!isNaN(newProcuctPrice)) {
         alert("قیمت معتبر نیست ")
       }
       else

@@ -16,7 +16,7 @@ function App() {
   const [titleRow, setTitleRow] = useState("");
   const [row, setRow] = useState(30);
   const [page, setPage] = useState(1);
-  const [newProcuctId, setNewProcuctId] = useState("");
+  const [newProcuctId, setNewProcuctId] = useState();
   const [newProcuctTitle, setNewProcuctTitle] = useState("");
   const [newProcuctPrice, setNewProcuctPrice] = useState("");
   const [newProcuctDescription, setNewProcuctDescription] = useState("");
@@ -77,41 +77,34 @@ function App() {
 
   const addProduct = async () => {
     if (window.confirm('Do you want to Add it?'))
-      if (isNaN(newProcuctId)) {
-        alert("آیدی معتبر نیست ")
-      }
-      else if (isNaN(newProcuctPrice)) {
-        alert("قیمت معتبر نیست ")
-      }
-      else
-        try {
-          const response = await fetch("https://dummyjson.com/products/add", {
-            method: "POST",
-            body: JSON.stringify(
-              { id: newProcuctId, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }
-            )
-          })
-          console.log(response)
+      try {
+        const response = await fetch("https://dummyjson.com/products/add", {
+          method: "POST",
+          body: JSON.stringify(
+            { id: newProcuctId, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }
+          )
+        })
+        console.log(response)
 
-          setData((x) => [...x, { id: newProcuctId, title: newProcuctTitle, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }])
-          setEmpty(!empty)
-          // setDataFiltered(Data)
-          if (response.status === 200) {
-            alert("add successfully")
-            document.getElementById("inputNewId").value = ""
-            document.getElementById("inputNewTitle").value = ""
-            document.getElementById("inputNewCategory").value = ""
-            document.getElementById("inputNewPrice").value = ""
-            document.getElementById("inputNewDescription").value = ""
-            if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
+        setData((x) => [...x, { id: newProcuctId, title: newProcuctTitle, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }])
+        setEmpty(!empty)
+        // setDataFiltered(Data)
+        if (response.status === 200) {
+          alert("add successfully")
+          document.getElementById("inputNewId").value = ""
+          document.getElementById("inputNewTitle").value = ""
+          document.getElementById("inputNewCategory").value = ""
+          document.getElementById("inputNewPrice").value = ""
+          document.getElementById("inputNewDescription").value = ""
+          if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
 
-          }
-
-          console.log(DataFiltered)
-        } catch (err) {
-          console.log("err = ", err);
-        } finally {
         }
+
+        console.log(DataFiltered)
+      } catch (err) {
+        console.log("err = ", err);
+      } finally {
+      }
 
   };
 
@@ -388,10 +381,7 @@ function App() {
           )) : ""}
 
         <tr className='addingInput'>
-          <th><input placeholder='= شناسه' onChange={(e) => {
-            setNewProcuctId(e.target.value); const value = e.target.value;
-            if (isNaN(+value)) alert("عدد نامعتبره");
-          }} id="inputNewId" /></th>
+          <th><input placeholder='= شناسه' onChange={(e) => { setNewProcuctId(e.target.value) }} id="inputNewId" /></th>
           <th>
             <div className="dropdown" id="dropdownMenuButton2">
               <button className="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -405,10 +395,7 @@ function App() {
               </div>
             </div></th>
           <th><input placeholder='نام' onChange={(e) => { setNewProcuctTitle(e.target.value) }} id="inputNewTitle" /> </th>
-          <th><input placeholder='قیمت' onChange={(e) => {
-            setNewProcuctPrice(e.target.value); const value = e.target.value;
-            if (isNaN(+value)) alert("عدد نامعتبره");
-          }} id="inputNewPrice" /></th>
+          <th><input placeholder='قیمت' onChange={(e) => { setNewProcuctPrice(e.target.value) }} id="inputNewPrice" /></th>
           <th><input placeholder='توضیحات' onChange={(e) => { setNewProcuctDescription(e.target.value) }} id="inputNewDescription" /> </th>
           <th className='addingTh'>
             <button className='actions addAction' onClick={() => addProduct()}>

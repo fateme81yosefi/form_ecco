@@ -77,10 +77,10 @@ function App() {
 
   const addProduct = async () => {
     if (window.confirm('Do you want to Add it?'))
-      if (isNaN(newProcuctId)) {
+      if (!isNaN(newProcuctId)) {
         alert("آیدی معتبر نیست ")
       }
-      else if (isNaN(newProcuctPrice)) {
+      else if (!isNaN(newProcuctPrice)) {
         alert("قیمت معتبر نیست ")
       }
       else
@@ -390,7 +390,7 @@ function App() {
         <tr className='addingInput'>
           <th><input placeholder='= شناسه' onChange={(e) => {
             setNewProcuctId(e.target.value); const value = e.target.value;
-            if (isNaN(+value)) alert("عدد نامعتبره");
+            console.log(!isNaN(+value));
           }} id="inputNewId" /></th>
           <th>
             <div className="dropdown" id="dropdownMenuButton2">
@@ -407,7 +407,7 @@ function App() {
           <th><input placeholder='نام' onChange={(e) => { setNewProcuctTitle(e.target.value) }} id="inputNewTitle" /> </th>
           <th><input placeholder='قیمت' onChange={(e) => {
             setNewProcuctPrice(e.target.value); const value = e.target.value;
-            if (isNaN(+value)) alert("عدد نامعتبره");
+            console.log(!isNaN(+value));
           }} id="inputNewPrice" /></th>
           <th><input placeholder='توضیحات' onChange={(e) => { setNewProcuctDescription(e.target.value) }} id="inputNewDescription" /> </th>
           <th className='addingTh'>

@@ -16,11 +16,11 @@ function App() {
   const [titleRow, setTitleRow] = useState("");
   const [row, setRow] = useState(30);
   const [page, setPage] = useState(1);
-  const [newProcuctId, setNewProcuctId] = useState("");
-  const [newProcuctTitle, setNewProcuctTitle] = useState("");
-  const [newProcuctPrice, setNewProcuctPrice] = useState("");
-  const [newProcuctDescription, setNewProcuctDescription] = useState("");
-  const [newProcuctCategory, setNewProcuctCategory] = useState("");
+  const [newProcuctId, setNewProcuctId] = useState();
+  const [newProcuctTitle, setNewProcuctTitle] = useState();
+  const [newProcuctPrice, setNewProcuctPrice] = useState();
+  const [newProcuctDescription, setNewProcuctDescription] = useState();
+  const [newProcuctCategory, setNewProcuctCategory] = useState();
 
 
   const postData = async () => {
@@ -58,60 +58,53 @@ function App() {
 
   const deleteProduct = async (x) => {
     if (window.confirm('Do you want to remove?'))
-      try {
-        const response = await fetch("https://dummyjson.com/products/" + x, {
-          method: "DELETE"
-        })
-        console.log(response)
-        setData(Data.filter(item => item.id !== x))
-        if (response.status === 200) {
-          alert("Removed seccessfully")
-        }
-      } catch (err) {
-        console.log("err = ", err);
-      } finally {
+    try {
+      const response = await fetch("https://dummyjson.com/products/" + x, {
+        method: "DELETE"
+      })
+      console.log(response)
+      setData(Data.filter(item => item.id !== x))
+      if (response.status === 200) {
+        alert("Removed seccessfully")
       }
+    } catch (err) {
+      console.log("err = ", err);
+    } finally {
+    }
 
   };
 
 
   const addProduct = async () => {
     if (window.confirm('Do you want to Add it?'))
-      if (isNaN(newProcuctId)) {
-        alert("آیدی معتبر نیست ")
+    try {
+      const response = await fetch("https://dummyjson.com/products/add", {
+        method: "POST",
+        body: JSON.stringify(
+          { id: newProcuctId, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }
+        )
+      })
+      console.log(response)
+
+      setData((x) => [...x, { id: newProcuctId, title: newProcuctTitle, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }])
+      setEmpty(!empty)
+      // setDataFiltered(Data)
+      if (response.status === 200) {
+        alert("add successfully")
+        document.getElementById("inputNewId").value = ""
+        document.getElementById("inputNewTitle").value = ""
+        document.getElementById("inputNewCategory").value = ""
+        document.getElementById("inputNewPrice").value = ""
+        document.getElementById("inputNewDescription").value = ""
+        if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
+
       }
-      else if (isNaN(newProcuctPrice)) {
-        alert("قیمت معتبر نیست ")
-      }
-      else
-        try {
-          const response = await fetch("https://dummyjson.com/products/add", {
-            method: "POST",
-            body: JSON.stringify(
-              { id: newProcuctId, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }
-            )
-          })
-          console.log(response)
 
-          setData((x) => [...x, { id: newProcuctId, title: newProcuctTitle, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }])
-          setEmpty(!empty)
-          // setDataFiltered(Data)
-          if (response.status === 200) {
-            alert("add successfully")
-            document.getElementById("inputNewId").value = ""
-            document.getElementById("inputNewTitle").value = ""
-            document.getElementById("inputNewCategory").value = ""
-            document.getElementById("inputNewPrice").value = ""
-            document.getElementById("inputNewDescription").value = ""
-            if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
-
-          }
-
-          console.log(DataFiltered)
-        } catch (err) {
-          console.log("err = ", err);
-        } finally {
-        }
+      console.log(DataFiltered)
+    } catch (err) {
+      console.log("err = ", err);
+    } finally {
+    }
 
   };
 
@@ -388,27 +381,20 @@ function App() {
           )) : ""}
 
         <tr className='addingInput'>
-          <th><input placeholder='= شناسه' onChange={(e) => {
-            setNewProcuctId(e.target.value); const value = e.target.value;
-            if (isNaN(+value)) alert("عدد نامعتبره");
-          }} id="inputNewId" /></th>
-          <th>
-            <div className="dropdown" id="dropdownMenuButton2">
-              <button className="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {newProcuctCategory === "" ? "دسته بندی" : newProcuctCategory}
-              </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{ maxHeight: "200px", overflow: "scroll" }}>
-                {categoryList.map((item, index) => (
-                  <a className="dropdown-item" onClick={() => { setNewProcuctCategory(item); }}>{item}</a>
-                ))}
-
-              </div>
-            </div></th>
+          <th><input placeholder='= شناسه' onChange={(e) => { setNewProcuctId(e.target.value) }} id="inputNewId" /></th>
+          <th> <div className="dropdown">
+            <button className="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {newProcuctCategory !== "" ? newProcuctCategory : "دسته بندی"}
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a className="dropdown-item" onClick={() => { setNewProcuctCategory("شناسه");}}>شناسه</a>
+              <a className="dropdown-item" onClick={() => { setNewProcuctCategory("دسته بندی");  }} >دسته بندی </a>
+              <a className="dropdown-item" onClick={() => { setNewProcuctCategory("نام ");}}>نام</a>
+              <a className="dropdown-item" onClick={() => { setNewProcuctCategory("قیمت"); setTitleSearch("قیمت") }}>قیمت</a>
+            </div>
+          </div></th>
           <th><input placeholder='نام' onChange={(e) => { setNewProcuctTitle(e.target.value) }} id="inputNewTitle" /> </th>
-          <th><input placeholder='قیمت' onChange={(e) => {
-            setNewProcuctPrice(e.target.value); const value = e.target.value;
-            if (isNaN(+value)) alert("عدد نامعتبره");
-          }} id="inputNewPrice" /></th>
+          <th><input placeholder='قیمت' onChange={(e) => { setNewProcuctPrice(e.target.value) }} id="inputNewPrice" /></th>
           <th><input placeholder='توضیحات' onChange={(e) => { setNewProcuctDescription(e.target.value) }} id="inputNewDescription" /> </th>
           <th className='addingTh'>
             <button className='actions addAction' onClick={() => addProduct()}>
