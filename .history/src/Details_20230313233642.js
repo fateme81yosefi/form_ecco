@@ -61,6 +61,7 @@ export default function Details() {
 
                 setTimeout(() => {
                     document.getElementById("errorWindow").style.display = "none"
+                    window.location.reload()
                 }, 6000)
             }
 
@@ -76,10 +77,7 @@ export default function Details() {
         } catch (err) {
             console.log("err = ", err);
         } finally {
-            setTimeout(() => {
-                navigate("/");
-            }, 3000)
-
+            navigate("/");
         }
     };
 

@@ -73,6 +73,7 @@ function App() {
         const response = await fetch("https://dummyjson.com/products/" + x, {
           method: "DELETE"
         })
+        console.log(response)
 
         setData(Data.filter(item => item.id !== x))
         if (response.status === 200) {
@@ -102,7 +103,6 @@ function App() {
         console.log("err = ", err);
       } finally {
 
-        setmodalAccept(false)
 
       }
     }
@@ -118,76 +118,67 @@ function App() {
     setmodalHeader("https://www.freeiconspng.com/thumbs/add-icon-png/add-1-icon--flatastic-1-iconset--custom-icon-design-0.png")
     setmodalBody("آیا میخواهید این آیتم را اضافه کنید؟")
 
-    DataFiltered.map((item, index) =>
-      item.id === newProcuctId ? (alert("آیدی وارد شده تکراری است"), setCkeckIdNewProduct(false)) : ""
-    )
-    if (isNaN(newProcuctId) | !ckeckIdNewProduct) {
-      alert("آیدی وارد شده باید عدد باشد و معتبر باشد ")
-      setshowModal(false)
-    }
-    else if (isNaN(newProcuctPrice)) {
-      alert("قیمت معتبر نیست ")
-      setshowModal(false)
+    if (modalAccept) {
+      DataFiltered.map((item, index) =>
+        item.id === newProcuctId ? (alert("آیدی وارد شده تکراری است"), setCkeckIdNewProduct(false)) : ""
+      )
 
-    }
-    else if (newProcuctTitle === "" || newProcuctPrice === "" || newProcuctCategory === "" || newProcuctId === "" || newProcuctDescription === "") {
-      setshowModal(false)
-      alert("لطفا تمام فیلد ها را پر کنید.")
+      if (isNaN(newProcuctId) | ckeckIdNewProduct) {
+        alert("آیدی وارد شده باید عدد باشد و معتبر باشد ")
+      }
+      else if (isNaN(newProcuctPrice)) {
+        alert("قیمت معتبر نیست ")
+      }
+      else if (newProcuctTitle === "" || newProcuctPrice === "" || newProcuctCategory === "" || newProcuctId === "" || newProcuctDescription === "")
+        alert("لطفا تمام فیلد ها را پر کنید.")
+      else {
+        try {
+          const response = await fetch("https://dummyjson.com/products/add", {
+            method: "POST",
+            body: JSON.stringify(
+              { id: newProcuctId, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }
+            )
+          })
+
+          setData((x) => [...x, { id: newProcuctId, title: newProcuctTitle, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }])
+          setEmpty(!empty)
+
+          if (response.status === 200) {
+            setMsgApiResult("عملیات افزودن کالا با موفقیت انجام شد.")
+            document.getElementById("errorWindow").style.backgroundColor = "#4cbb17"
+            document.getElementById("errorWindow").style.display = "flex"
+
+            setTimeout(() => {
+              document.getElementById("errorWindow").style.display = "none"
+            }, 6000)
+
+            document.getElementById("inputNewId").value = ""
+            document.getElementById("inputNewTitle").value = ""
+            document.getElementById("inputNewCategory").value = ""
+            document.getElementById("inputNewPrice").value = ""
+            document.getElementById("inputNewDescription").value = ""
+            if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
+
+          } else {
+            setMsgApiResult("مشکلی رخ داده است. لطفا مجددا تلاش کنید.")
+            document.getElementById("errorWindow").style.backgroundColor = "#ed4337"
+            document.getElementById("errorWindow").style.display = "flex"
+
+            setTimeout(() => {
+              document.getElementById("errorWindow").style.display = "none"
+            }, 6000)
+            setmodalBody(response)
+            setmodalHeader("https://banner2.cleanpng.com/20180608/ckp/kisspng-computer-icons-download-clip-art-5b1a78e2334640.19371497152846153821.jpg")
+
+          }
 
 
-    }
-
-    else if (modalAccept) {
-
-      try {
-        const response = await fetch("https://dummyjson.com/products/add", {
-          method: "POST",
-          body: JSON.stringify(
-            { id: newProcuctId, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }
-          )
-        })
-
-        setData((x) => [...x, { id: newProcuctId, title: newProcuctTitle, price: newProcuctPrice, description: newProcuctDescription, category: newProcuctCategory }])
-        setEmpty(!empty)
-
-        if (response.status === 200) {
-          setMsgApiResult("عملیات افزودن کالا با موفقیت انجام شد.")
-          document.getElementById("errorWindow").style.backgroundColor = "#4cbb17"
-          document.getElementById("errorWindow").style.display = "flex"
-
-          setTimeout(() => {
-            document.getElementById("errorWindow").style.display = "none"
-          }, 6000)
-
-          document.getElementById("inputNewId").value = ""
-          document.getElementById("inputNewTitle").value = ""
-          document.getElementById("inputNewCategory").value = ""
-          document.getElementById("inputNewPrice").value = ""
-          document.getElementById("inputNewDescription").value = ""
-          
-          if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
-
-        } else {
-          setMsgApiResult("مشکلی رخ داده است. لطفا مجددا تلاش کنید.")
-          document.getElementById("errorWindow").style.backgroundColor = "#ed4337"
-          document.getElementById("errorWindow").style.display = "flex"
-
-          setTimeout(() => {
-            document.getElementById("errorWindow").style.display = "none"
-          }, 6000)
-          setmodalBody(response)
-          setmodalHeader("https://banner2.cleanpng.com/20180608/ckp/kisspng-computer-icons-download-clip-art-5b1a78e2334640.19371497152846153821.jpg")
-
+        } catch (err) {
+          console.log("err = ", err);
+        } finally {
         }
 
-
-      } catch (err) {
-        console.log("err = ", err);
-      } finally {
-        setmodalAccept(false)
       }
-
-
     }
 
 

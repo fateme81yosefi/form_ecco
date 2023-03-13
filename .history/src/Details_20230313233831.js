@@ -76,10 +76,12 @@ export default function Details() {
         } catch (err) {
             console.log("err = ", err);
         } finally {
+
             setTimeout(() => {
                 navigate("/");
-            }, 3000)
+            }, 1000)
 
+            navigate("/");
         }
     };
 

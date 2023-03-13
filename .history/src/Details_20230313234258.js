@@ -78,7 +78,7 @@ export default function Details() {
         } finally {
             setTimeout(() => {
                 navigate("/");
-            }, 3000)
+            }, 1000)
 
         }
     };

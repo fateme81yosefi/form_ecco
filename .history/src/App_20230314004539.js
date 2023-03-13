@@ -131,13 +131,12 @@ function App() {
 
     }
     else if (newProcuctTitle === "" || newProcuctPrice === "" || newProcuctCategory === "" || newProcuctId === "" || newProcuctDescription === "") {
-      setshowModal(false)
       alert("لطفا تمام فیلد ها را پر کنید.")
-
+      setshowModal(false)
 
     }
 
-    else if (modalAccept) {
+     if (modalAccept) {
 
       try {
         const response = await fetch("https://dummyjson.com/products/add", {
@@ -164,7 +163,6 @@ function App() {
           document.getElementById("inputNewCategory").value = ""
           document.getElementById("inputNewPrice").value = ""
           document.getElementById("inputNewDescription").value = ""
-          
           if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
 
         } else {

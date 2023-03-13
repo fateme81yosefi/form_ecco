@@ -76,10 +76,12 @@ export default function Details() {
         } catch (err) {
             console.log("err = ", err);
         } finally {
+
             setTimeout(() => {
-                navigate("/");
+                document.getElementById("errorWindow").style.display = "none"
             }, 3000)
 
+            navigate("/");
         }
     };
 

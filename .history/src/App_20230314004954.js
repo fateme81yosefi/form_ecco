@@ -164,7 +164,6 @@ function App() {
           document.getElementById("inputNewCategory").value = ""
           document.getElementById("inputNewPrice").value = ""
           document.getElementById("inputNewDescription").value = ""
-          
           if ((Math.ceil(Data.length / row)) > page) setPage(Math.ceil(DataFiltered.length / row))
 
         } else {
