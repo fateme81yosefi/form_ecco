@@ -1,0 +1,13 @@
+.containeEditForm {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.editForm {
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  pa
+}

@@ -1,0 +1,24 @@
+.containeEditForm {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.editForm {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 30%;
+  background-color: #b6b5bc;
+}
+.editForm input {
+  background-color: #f7f7f7;
+  color: #b6b5bc;
+}
+.containButtonEdit {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+.c

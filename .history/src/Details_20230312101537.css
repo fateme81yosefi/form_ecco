@@ -1,0 +1,47 @@
+.containeEditForm {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.editForm {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 30%;
+  background-color: #b6b5bc;
+}
+.editForm input {
+  background-color: #f7f7f7;
+  color: #b6b5bc;
+  margin-top: 20px;
+  border: none;
+  pa
+}
+.containButtonEdit {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.containButtonEdit button {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 40px;
+}
+.cancelButton {
+}
+.saveButton {
+  background: linear-gradient(rgb(31, 50, 241));
+  background: rgb(94, 40, 237);
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(31, 50, 241),
+    rgb(94, 40, 237)
+  );
+  margin-left: 10px;
+  background: linear-gradient(to right, rgb(31, 50, 241), rgb(94, 40, 237));
+  color: white;
+}

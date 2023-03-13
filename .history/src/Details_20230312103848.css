@@ -1,0 +1,58 @@
+.containeEditForm {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.editForm {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 30%;
+}
+.editForm input {
+  background-color: #f7f7f7;
+  color: #b6b5bc;
+  margin-top: 20px;
+  border:  3px solid transparent;
+  padding: 10px;
+  outline: none;
+  border-radius: 7px;
+  text-align: right;
+
+}
+.editForm input:focus {
+    border: 3px solid rgb(131, 134, 222);
+
+  }
+.containButtonEdit {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.containButtonEdit button {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 40px;
+
+}
+.cancelButton {
+    background-color: white;
+    border: 1px solid #f7f7f7;
+}
+.saveButton {
+  background: linear-gradient(rgb(31, 50, 241));
+  background: rgb(94, 40, 237);
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(31, 50, 241),
+    rgb(94, 40, 237)
+  );
+  margin-left: 10px;
+  background: linear-gradient(to right, rgb(31, 50, 241), rgb(94, 40, 237));
+  color: white;
+  border: 1px solid  rgb(31, 50, 241);
+
+}
